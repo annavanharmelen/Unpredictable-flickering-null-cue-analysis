@@ -187,8 +187,8 @@ for pp = pp2do
         bar([1:2], congruency_error(p,1:2)); 
         xticks([1,2]);
         xticklabels(labels);
-        ylim([0 dt_lim]);
-        title(['decision time, all trials - pp ', num2str(pp)]);
+        ylim([0 er_lim]);
+        title(['error, all trials - pp ', num2str(pp)]);
     end
 end
 
