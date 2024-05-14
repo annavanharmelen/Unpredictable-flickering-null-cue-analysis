@@ -3,9 +3,9 @@ function param = getSubjParam(pp)
 %% participant-specific notes
 
 %% set path and pp-specific file locations
-unique_numbers = [64, 97, 50, 32, 77, 31, 34, 92, 89]; %needs to be in the right order
+unique_numbers = [64, 97, 50, 32, 77, 31, 34, 92, 89, 16, 42, 98, 30, 21, 88, 38, 55, 80, 59, 46]; %needs to be in the right order
 
-param.path = 'C:\Users\annav\Documents\Jottacloud\Neuroscience PhD\Experiments\Vidi experiments\Data\Vidi4 - Unpredictable flickering\';
+param.path = '\\labsdfs.labs.vu.nl\labsdfs\FGB-ETP-CogPsy-ProactiveBrainLab\core_lab_members\Anna\Data\vidi4 - unpredictable flickering null-cue\';
 
 if pp < 10
     param.subjName = sprintf('pp0%d', pp);
