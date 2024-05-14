@@ -5,10 +5,10 @@ clc
 %% set parameters and loops
 see_performance = 0;
 display_percentageok = 1;
-plot_individuals = 0;
-plot_averages = 0;
+plot_individuals = 1;
+plot_averages = 1;
 
-pp2do = [1:9]; 
+pp2do = [1:20]; 
 p = 0;
 
 [bar_size, colours,  dark_colours, labels, subplot_size, percentageok] = setBehaviourParam(pp2do);
@@ -216,7 +216,10 @@ if plot_averages
     %% does it work at all?
     figure;
     subplot(1,2,1);
+    hold on;
     bar([1:2], mean(congruency_decisiontime)); 
+    plot([1:2], congruency_decisiontime', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:2], mean(congruency_decisiontime), std(congruency_decisiontime) ./ sqrt(p), "black","LineStyle","none");
     xticks([1,2]);
     xticklabels(labels);
     ylim([0 dt_lim]);
@@ -224,7 +227,10 @@ if plot_averages
     title('decision time, all trials');
 
     subplot(1,2,2);
+    hold on; 
     bar([1:2], mean(congruency_error)); 
+    plot([1:2], congruency_error', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:2], mean(congruency_error), std(congruency_error) ./ sqrt(p), "black","LineStyle","none");
     xticks([1,2]);
     xticklabels(labels);
     ylim([0 er_lim]);
@@ -238,6 +244,7 @@ if plot_averages
     hold on
     bar([1:2], mean(predictability_dt_effect)); 
     plot([1:2], predictability_dt_effect', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:2], mean(predictability_dt_effect), std(predictability_dt_effect) ./ sqrt(p), "black","LineStyle","none");
     xticks([1,2]);
     xticklabels(predictability_labels);
     ylim([-30 150]);
@@ -248,6 +255,7 @@ if plot_averages
     hold on
     bar([1:2], mean(predictability_er_effect)); 
     plot([1:2], predictability_er_effect', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:2], mean(predictability_er_effect), std(predictability_er_effect) ./ sqrt(p), "black","LineStyle","none");
     xticks([1,2]);
     xticklabels(predictability_labels);
     ylim([-1 7]);
@@ -260,6 +268,7 @@ if plot_averages
     hold on
     bar([1:3], mean(timing_dt_effect)); 
     plot([1:3], timing_dt_effect', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:3], mean(timing_dt_effect), std(timing_dt_effect) ./ sqrt(p), "black","LineStyle","none");
     xticks([1,2,3]);
     xticklabels(timing_labels);
     xlim([0.3 3.7]);
@@ -269,6 +278,7 @@ if plot_averages
     hold on
     bar([1:3], mean(timing_er_effect)); 
     plot([1:3], timing_er_effect', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:3], mean(timing_er_effect), std(timing_er_effect) ./ sqrt(p), "black","LineStyle","none");
     xticks([1,2,3]);
     xticklabels(timing_labels);
     xlim([0.3 3.7]);
@@ -331,6 +341,7 @@ if plot_averages
     hold on
     bar([1:3], mean(cue_flicker_dt_effect)); 
     plot([1:3], cue_flicker_dt_effect', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:3], mean(cue_flicker_dt_effect), std(cue_flicker_dt_effect) ./ sqrt(p), "black","LineStyle","none");
     xticks([1,2,3]);
     xticklabels(cue_flicker_labels);
     xlim([0.3 3.7]);
@@ -340,6 +351,7 @@ if plot_averages
     hold on
     bar([1:3], mean(cue_flicker_er_effect)); 
     plot([1:3], cue_flicker_er_effect', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:3], mean(cue_flicker_er_effect), std(cue_flicker_er_effect) ./ sqrt(p), "black","LineStyle","none");
     xticks([1,2,3]);
     xticklabels(cue_flicker_labels);
     xlim([0.3 3.7]);
