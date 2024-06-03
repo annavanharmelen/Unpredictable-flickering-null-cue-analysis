@@ -1,4 +1,4 @@
-function [bar_size, colours, dark_colours, labels, subplot_size, percentageok] = setBehaviourParam(pp2do)
+function [bar_size, colours, dark_colours, labels, subplot_size, percentageok, all_conditions_dt, all_conditions_er] = setBehaviourParam(pp2do)
 %SETBEHAVIOURPARAM sets the parameters for analysing the behavioural data.
 bar_size = 0.8;
 
@@ -19,6 +19,9 @@ labels = {'congruent', 'incongruent'};
 subplot_size = ceil(sqrt(size(pp2do, 2)));
 
 percentageok = zeros(size(pp2do));
+
+all_conditions_dt = [];
+all_conditions_er = [];
 
 end
 
