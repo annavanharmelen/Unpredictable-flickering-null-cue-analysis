@@ -11,7 +11,7 @@ plot_averages = 0;
 pp2do = [1,3:25,27]; 
 p = 0;
 
-[bar_size, colours,  dark_colours, labels, subplot_size, percentageok, all_conditions_dt, all_conditions_er] = setBehaviourParam(pp2do);
+[bar_size, colours,  dark_colours, labels, subplot_size, percentageok, all_conditions_dt, all_conditions_er, timing_x_stability_dt, timing_x_stability_er, timing_x_predictability_dt, timing_x_predictability_er] = setBehaviourParam(pp2do);
 
 for pp = pp2do
     p = p+1;
@@ -183,7 +183,32 @@ for pp = pp2do
         end
     end
 
+    % data for interactions
+    timing_x_stability_labels = {'early stable', 'early low freq','early high freq','middle stable','middle low freq',	'middle high freq','late stable ','late low freq ','late high freq'};
+    levels_1 = [early_cue_trials, middle_cue_trials, late_cue_trials];
+    levels_2 = [stable_cue_trials, low_freq_cue_trials, high_freq_cue_trials];
+    idx = 1;
 
+    for i = levels_1
+        for j = levels_2
+            timing_x_stability_dt(p,idx) = mean(behdata.idle_reaction_time_in_ms(i&j&oktrials&incongruent_trials)) - mean(behdata.idle_reaction_time_in_ms(i&j&oktrials&congruent_trials));
+            timing_x_stability_er(p,idx) = mean(behdata.absolute_difference(i&j&oktrials&incongruent_trials)) - mean(behdata.absolute_difference(i&j&oktrials&congruent_trials));
+            idx = idx + 1;
+        end
+    end
+
+    timing_x_predictability_labels = {'early predictable', 'early unpredictable','middle predictable','middle unpredictable','late predictable','late unpredictable'};
+    levels_1 = [early_cue_trials, middle_cue_trials, late_cue_trials];
+    levels_2 = [predictable_trials, unpredictable_trials];
+    idx = 1;
+
+    for i = levels_1
+        for j = levels_2
+            timing_x_predictability_dt(p,idx) = mean(behdata.idle_reaction_time_in_ms(i&j&oktrials&incongruent_trials)) - mean(behdata.idle_reaction_time_in_ms(i&j&oktrials&congruent_trials));
+            timing_x_predictability_er(p,idx) = mean(behdata.absolute_difference(i&j&oktrials&incongruent_trials)) - mean(behdata.absolute_difference(i&j&oktrials&congruent_trials));
+            idx = idx + 1;
+        end
+    end
     %% plot individuals
     dt_lim = 1200;
     er_lim = 30;
@@ -396,8 +421,57 @@ if plot_averages
     xticklabels(all_conditions_labels);
     % xlim([0.3 3.7]);
     title('er effect of all conditions');
+    
+    % study interactions between timing and cue-stability
+    figure;
+    subplot(2,1,1)
+    hold on
+    errorbar(1:3, mean(timing_x_stability_dt(:,[1,4,7])), std(timing_x_stability_dt(:,[1,4,7])) ./ sqrt(p));
+    errorbar(1:3, mean(timing_x_stability_dt(:,[2,5,8])), std(timing_x_stability_dt(:,[2,5,8])) ./ sqrt(p));
+    errorbar(1:3, mean(timing_x_stability_dt(:,[3,6,9])), std(timing_x_stability_dt(:,[3,6,9])) ./ sqrt(p));
+    xticks([1:3]);
+    xticklabels(["early", "middle", "late"]);
+    xlim([0.8, 3.2]);
+    ylabel("dt-effect (ms)");
+    title('dt effect of timing x cue-stability');
+    legend("stable", "low-freq", "high-freq");
 
-     
+    subplot(2,1,2)
+    hold on
+    errorbar(1:3, mean(timing_x_stability_er(:,[1,4,7])), std(timing_x_stability_er(:,[1,4,7])) ./ sqrt(p));
+    errorbar(1:3, mean(timing_x_stability_er(:,[2,5,8])), std(timing_x_stability_er(:,[2,5,8])) ./ sqrt(p));
+    errorbar(1:3, mean(timing_x_stability_er(:,[3,6,9])), std(timing_x_stability_er(:,[3,6,9])) ./ sqrt(p));
+    xticks([1:3]);
+    xticklabels(["early", "middle", "late"]);
+    xlim([0.8, 3.2]);
+    ylabel("er-effect (deg)");
+    title('er effect of timing x cue-stability');
+    legend("stable", "low-freq", "high-freq");
+
+    % study interactions between timing and predictability
+    figure;
+    subplot(2,1,1)
+    hold on
+    errorbar(1:3, mean(timing_x_predictability_dt(:,[1,3,5])), std(timing_x_predictability_dt(:,[1,3,5])) ./ sqrt(p));
+    errorbar(1:3, mean(timing_x_predictability_dt(:,[2,4,6])), std(timing_x_predictability_dt(:,[2,4,6])) ./ sqrt(p));
+    xticks([1:3]);
+    xticklabels(["early", "middle", "late"]);
+    xlim([0.8, 3.2]);
+    ylabel("dt-effect (ms)");
+    title('dt effect of timing x predictability');
+    legend("predictable", "unpredictable");
+
+    subplot(2,1,2)
+    hold on
+    errorbar(1:3, mean(timing_x_predictability_er(:,[1,3,5])), std(timing_x_predictability_er(:,[1,3,5])) ./ sqrt(p));
+    errorbar(1:3, mean(timing_x_predictability_er(:,[2,4,6])), std(timing_x_predictability_er(:,[2,4,6])) ./ sqrt(p));
+    xticks([1:3]);
+    xticklabels(["early", "middle", "late"]);
+    xlim([0.8, 3.2]);
+    ylabel("er-effect (deg)");
+    title('er effect of timing x cue-stability');
+    legend("predictable", "unpredictable");
+
 end
 
 %% see performance per block (for fun for participants)
