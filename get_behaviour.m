@@ -5,13 +5,13 @@ clc
 %% set parameters and loops
 see_performance = 0;
 display_percentageok = 1;
-plot_individuals = 1;
-plot_averages = 1;
+plot_individuals = 0;
+plot_averages = 0;
 
-pp2do = [1:20]; 
+pp2do = [1,3:25,27]; 
 p = 0;
 
-[bar_size, colours,  dark_colours, labels, subplot_size, percentageok] = setBehaviourParam(pp2do);
+[bar_size, colours,  dark_colours, labels, subplot_size, percentageok, all_conditions_dt, all_conditions_er] = setBehaviourParam(pp2do);
 
 for pp = pp2do
     p = p+1;
@@ -135,7 +135,6 @@ for pp = pp2do
     cue_flicker_error(p,4) = mean(behdata.absolute_difference(incongruent_trials&low_freq_cue_trials&oktrials));
     cue_flicker_error(p,5) = mean(behdata.absolute_difference(congruent_trials&high_freq_cue_trials&oktrials));
     cue_flicker_error(p,6) = mean(behdata.absolute_difference(incongruent_trials&high_freq_cue_trials&oktrials));
-    
 
     %% calculate aggregates of interest
     % always incongruent - congruent
@@ -166,6 +165,24 @@ for pp = pp2do
     cue_flicker_er_effect(p,1) = cue_flicker_error(p,2) - cue_flicker_error(p,1);
     cue_flicker_er_effect(p,2) = cue_flicker_error(p,4) - cue_flicker_error(p,3);
     cue_flicker_er_effect(p,3) = cue_flicker_error(p,6) - cue_flicker_error(p,5);
+
+    % data for all 18 conditions separately
+    all_conditions_labels = {'early stable predictable','early stable unpredictable','early low freq predictable','early low freq unpredictable',	'early high freq predictable',	'early high freq unpredictable',	'middle stable predictable',	'middle stable unpredictable',	'middle low freq predictable',	'middle low freq unpredictable',	'middle high freq predictable',	'middle high freq unpredictable',	'late stable predictable',	'late stable unpredictable',	'late low freq predictable',	'late low freq unpredictable',	'late high freq predictable',	'late high freq unpredictable'};
+    levels_1 = [early_cue_trials, middle_cue_trials, late_cue_trials];
+    levels_2 = [stable_cue_trials, low_freq_cue_trials, high_freq_cue_trials];
+    levels_3 = [predictable_trials, unpredictable_trials];
+    idx = 1;
+
+    for i = levels_1
+        for j = levels_2
+            for k = levels_3
+                all_conditions_dt(p,idx) = mean(behdata.idle_reaction_time_in_ms(i&j&k&oktrials&incongruent_trials)) - mean(behdata.idle_reaction_time_in_ms(i&j&k&oktrials&congruent_trials));
+                all_conditions_er(p,idx) = mean(behdata.absolute_difference(i&j&k&oktrials&incongruent_trials)) - mean(behdata.absolute_difference(i&j&k&oktrials&congruent_trials));
+                idx = idx + 1;
+            end
+        end
+    end
+
 
     %% plot individuals
     dt_lim = 1200;
@@ -356,6 +373,30 @@ if plot_averages
     xticklabels(cue_flicker_labels);
     xlim([0.3 3.7]);
     title('er effect of stability');
+
+    % figure with all 18 conditions
+    figure;
+    subplot(2,1,1)
+    hold on
+    b = bar([1:18], mean(all_conditions_dt));
+
+    % plot([1:18], cue_flicker_er_effect', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:18], mean(all_conditions_dt), std(all_conditions_dt) ./ sqrt(p), "black","LineStyle","none");
+    xticks([1:18]);
+    xticklabels(all_conditions_labels);
+    % xlim([0.3 3.7]);
+    title('dt effect of all conditions');
+
+    subplot(2,1,2)
+    hold on
+    bar([1:18], mean(all_conditions_er)); 
+    % plot([1:18], cue_flicker_er_effect', 'Color', [0, 0, 0, 0.25]);
+    errorbar([1:18], mean(all_conditions_er), std(all_conditions_er) ./ sqrt(p), "black","LineStyle","none");
+    xticks([1:18]);
+    xticklabels(all_conditions_labels);
+    % xlim([0.3 3.7]);
+    title('er effect of all conditions');
+
      
 end
 
