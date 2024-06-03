@@ -1,4 +1,4 @@
-function [bar_size, colours, dark_colours, labels, subplot_size, percentageok, all_conditions_dt, all_conditions_er] = setBehaviourParam(pp2do)
+function [bar_size, colours, dark_colours, labels, subplot_size, percentageok, all_conditions_dt, all_conditions_er, timing_x_stability_dt, timing_x_stability_er, timing_x_predictability_dt, timing_x_predictability_er] = setBehaviourParam(pp2do)
 %SETBEHAVIOURPARAM sets the parameters for analysing the behavioural data.
 bar_size = 0.8;
 
@@ -22,6 +22,12 @@ percentageok = zeros(size(pp2do));
 
 all_conditions_dt = [];
 all_conditions_er = [];
+
+timing_x_stability_dt = [];
+timing_x_stability_er = [];
+
+timing_x_predictability_dt = [];
+timing_x_predictability_er = [];
 
 end
 
