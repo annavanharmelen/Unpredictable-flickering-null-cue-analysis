@@ -424,7 +424,7 @@ if plot_averages
     
     % study interactions between timing and cue-stability
     figure;
-    subplot(2,1,1)
+    subplot(1,2,1)
     hold on
     errorbar(1:3, mean(timing_x_stability_dt(:,[1,4,7])), std(timing_x_stability_dt(:,[1,4,7])) ./ sqrt(p));
     errorbar(1:3, mean(timing_x_stability_dt(:,[2,5,8])), std(timing_x_stability_dt(:,[2,5,8])) ./ sqrt(p));
@@ -436,7 +436,7 @@ if plot_averages
     title('dt effect of timing x cue-stability');
     legend("stable", "low-freq", "high-freq");
 
-    subplot(2,1,2)
+    subplot(1,2,2)
     hold on
     errorbar(1:3, mean(timing_x_stability_er(:,[1,4,7])), std(timing_x_stability_er(:,[1,4,7])) ./ sqrt(p));
     errorbar(1:3, mean(timing_x_stability_er(:,[2,5,8])), std(timing_x_stability_er(:,[2,5,8])) ./ sqrt(p));
@@ -450,7 +450,7 @@ if plot_averages
 
     % study interactions between timing and predictability
     figure;
-    subplot(2,1,1)
+    subplot(1,2,1)
     hold on
     errorbar(1:3, mean(timing_x_predictability_dt(:,[1,3,5])), std(timing_x_predictability_dt(:,[1,3,5])) ./ sqrt(p));
     errorbar(1:3, mean(timing_x_predictability_dt(:,[2,4,6])), std(timing_x_predictability_dt(:,[2,4,6])) ./ sqrt(p));
@@ -461,7 +461,7 @@ if plot_averages
     title('dt effect of timing x predictability');
     legend("predictable", "unpredictable");
 
-    subplot(2,1,2)
+    subplot(1,2,2)
     hold on
     errorbar(1:3, mean(timing_x_predictability_er(:,[1,3,5])), std(timing_x_predictability_er(:,[1,3,5])) ./ sqrt(p));
     errorbar(1:3, mean(timing_x_predictability_er(:,[2,4,6])), std(timing_x_predictability_er(:,[2,4,6])) ./ sqrt(p));
