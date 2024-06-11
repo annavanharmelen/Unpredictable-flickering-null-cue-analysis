@@ -4,10 +4,10 @@
 clear; clc; close all;
 
 %% parameters
-for pp = [2];
+for pp = [1:25, 27];
 
     oneOrTwoD       = 1; oneOrTwoD_options = {'_1D','_2D'};
-    plotResults     = 1;
+    plotResults     = 0;
 
     %% load epoched data of this participant data
     param = getSubjParam(pp);

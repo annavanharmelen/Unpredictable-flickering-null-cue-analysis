@@ -5,7 +5,7 @@
 clear; clc; close all;
 
 %% parameters
-pp2do = [1:9];
+pp2do = [1, 3:25, 27];
 
 nsmooth         = 200;
 baselineCorrect = 1;

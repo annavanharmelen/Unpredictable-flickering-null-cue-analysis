@@ -5,10 +5,10 @@
 clear; clc; close all;
     
 %% parameters
-pp2do           = [1:2];
+pp2do           = [1, 3:25, 27];
 oneOrTwoD       = 1;        oneOrTwoD_options = {'_1D','_2D'};
 nsmooth         = 200;
-plotSinglePps   = 1;
+plotSinglePps   = 0;
 plotGAs         = 1;
 xlimtoplot      = [-100 1500];
 
