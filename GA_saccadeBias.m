@@ -25,7 +25,7 @@ for pp = pp2do
 
     % load
     disp(['getting data from participant ', param.subjName]);
-    load([param.path, '\saved_data\saccadeEffects', oneOrTwoD_options{oneOrTwoD} '__', param.subjName], 'saccade','saccadesize');
+    load([param.path, '\saved_data\saccadeEffects_probe', oneOrTwoD_options{oneOrTwoD} '__', param.subjName], 'saccade','saccadesize');
        
     % smooth?
     if nsmooth > 0
@@ -141,6 +141,48 @@ if plotGAs
     plot(xlim, [0,0], '--k');
     plot([0,0], ylimit, '--k');
     legend([p1], saccade.label(1));
+    xlim(xlimtoplot);
+    ylabel('Rate (Hz)');
+    xlabel('Time (ms)');
+
+    %% towardness overlay of late vs. early
+    ylimit = [-0.3, 0.3];
+    figure;
+    hold on;
+    p1 = frevede_errorbarplot(saccade.time, squeeze(d3(:,6,:)) - squeeze(d3(:,8,:)), 'k', 'both');
+    p2 = frevede_errorbarplot(saccade.time, squeeze(d3(:,6,:)), 'r', 'both');
+    p3 = frevede_errorbarplot(saccade.time, squeeze(d3(:,7,:)), 'g', 'both');
+    p4 = frevede_errorbarplot(saccade.time, squeeze(d3(:,8,:)), 'b', 'both');
+    plot(xlim, [0,0], '--k');
+    plot([0,0], ylimit, '--k');
+    legend([p1, p2, p3, p4], {"early - late", "early", "middle", "late"});
+    xlim(xlimtoplot);
+    ylabel('Rate (Hz)');
+    xlabel('Time (ms)');
+
+    %% towardness overlay of early vs. late x congruent vs. incongruent
+    ylimit = [-0.3, 0.3];
+    figure;
+    subplot(1,2,1)
+    hold on;
+    p1 = frevede_errorbarplot(saccade.time, squeeze(d3(:,12,:)) - squeeze(d3(:,13,:)), 'k', 'both');
+    p2 = frevede_errorbarplot(saccade.time, squeeze(d3(:,13,:)), 'r', 'both');
+    p3 = frevede_errorbarplot(saccade.time, squeeze(d3(:,12,:)), 'b', 'both');
+    plot(xlim, [0,0], '--k');
+    plot([0,0], ylimit, '--k');
+    legend([p1, p2, p3], {"early con - early incon", "early incon", "early con"});
+    xlim(xlimtoplot);
+    ylabel('Rate (Hz)');
+    xlabel('Time (ms)');
+
+    subplot(1,2,2)
+    hold on;
+    p1 = frevede_errorbarplot(saccade.time, squeeze(d3(:,14,:)) - squeeze(d3(:,15,:)), 'k', 'both');
+    p2 = frevede_errorbarplot(saccade.time, squeeze(d3(:,15,:)), 'r', 'both');
+    p3 = frevede_errorbarplot(saccade.time, squeeze(d3(:,14,:)), 'b', 'both');
+    plot(xlim, [0,0], '--k');
+    plot([0,0], ylimit, '--k');
+    legend([p1, p2, p3], {"late con - late incon", "late incon", "late con"});
     xlim(xlimtoplot);
     ylabel('Rate (Hz)');
     xlabel('Time (ms)');

@@ -11,7 +11,7 @@ for pp = [2];
 
     %% load epoched data of this participant data
     param = getSubjParam(pp);
-    load([param.path, '\epoched_data\eyedata_vidi4','_'  param.subjName], 'eyedata');
+    load([param.path, '\epoched_data\eyedata_vidi4_probe','_'  param.subjName], 'eyedata');
 
     %% add relevant behavioural file data
 
@@ -32,31 +32,31 @@ for pp = [2];
 
     %% selection vectors for conditions -- this is where it starts to become interesting!
     % probed item location
-    targL = ismember(tl.trialinfo(:,1), [21,23,25,27,29,211:2:271]);
-    targR = ismember(tl.trialinfo(:,1), [22,24,26,28,210:2:272]);
+    targL = ismember(tl.trialinfo(:,1), [31,33,35,37,39,311:2:371]);
+    targR = ismember(tl.trialinfo(:,1), [32,34,36,38,310:2:372]);
     
     % congruency
-    congruent =     ismember(tl.trialinfo(:,1), [21:26, 213:218, 225:230, 237:242, 249:254, 261:266]);
-    incongruent  =  ismember(tl.trialinfo(:,1), [27:29, 210:212, 219:224, 231:236, 243:248, 255:260, 267:272]);
+    congruent =     ismember(tl.trialinfo(:,1), [31:36, 313:318, 325:330, 337:342, 349:354, 361:366]);
+    incongruent  =  ismember(tl.trialinfo(:,1), [37:39, 310:312, 319:324, 331:336, 343:348, 355:360, 367:372]);
     
     % cued item location
     captureL = (targL&congruent)+(targR&incongruent);
     captureR = (targR&congruent)+(targL&incongruent);
    
     % predictability
-    predictable = ismember(tl.trialinfo(:,1), [21:29, 210:236]);
-    unpredictable = ismember(tl.trialinfo(:,1), [237:272]);
+    predictable = ismember(tl.trialinfo(:,1), [31:39, 310:336]);
+    unpredictable = ismember(tl.trialinfo(:,1), [337:372]);
 
     % timing
-    early = ismember(tl.trialinfo(:,1), [21:29, 210:212, 237:248]);
-    middle = ismember(tl.trialinfo(:,1), [213:224, 249:260]);
-    late = ismember(tl.trialinfo(:,1), [225:236, 261:272]);
+    early = ismember(tl.trialinfo(:,1), [31:39, 310:312, 337:348]);
+    middle = ismember(tl.trialinfo(:,1), [313:324, 349:360]);
+    late = ismember(tl.trialinfo(:,1), [325:336, 361:372]);
     
     stable_trigs = [];
     low_freq_trigs = [];
     high_freq_trigs = [];
 
-    all_triggers = [21:29, 210:272];
+    all_triggers = [31:39, 310:372];
     for trigger = all_triggers
         i = find(all_triggers==trigger);
         if mod(i, 6) == 5 || mod(i, 6) == 0
@@ -109,7 +109,11 @@ for pp = [2];
         'late', ...
         'stable', ...
         'low_freq', ...
-        'high_freq'};
+        'high_freq', ...
+        'congruent early', ...
+        'incongruent early', ...
+        'congruent late', ...
+        'incongruent late'};
 
     for selection = [1:size(saccade.label, 2)] % conditions.
         if     selection == 1  sel = ones(size(congruent));
@@ -123,10 +127,14 @@ for pp = [2];
             elseif selection == 9  sel = stable;
             elseif selection == 10 sel = low_freq;
             elseif selection == 11 sel = high_freq;
+            elseif selection == 12 sel = congruent&early;
+            elseif selection == 13 sel = incongruent&early;
+            elseif selection == 14 sel = congruent&late;
+            elseif selection == 15 sel = incongruent&late;
         end
 
-        saccade.toward(selection,:) =  (mean(shiftsL(captureL&sel,:)) + mean(shiftsR(captureR&sel,:))) ./ 2;
-        saccade.away(selection,:)  =   (mean(shiftsL(captureR&sel,:)) + mean(shiftsR(captureL&sel,:))) ./ 2;
+        saccade.toward(selection,:) =  (mean(shiftsL(targL&sel,:)) + mean(shiftsR(targR&sel,:))) ./ 2;
+        saccade.away(selection,:)  =   (mean(shiftsL(targR&sel,:)) + mean(shiftsR(targL&sel,:))) ./ 2;
     end
 
     % add towardness field
@@ -248,7 +256,7 @@ for pp = [2];
     end
 
     %% save
-    save([param.path, '\saved_data\saccadeEffects', oneOrTwoD_options{oneOrTwoD} '__', param.subjName], 'saccade','saccadesize');
+    save([param.path, '\saved_data\saccadeEffects_probe', oneOrTwoD_options{oneOrTwoD} '__', param.subjName], 'saccade','saccadesize');
 
     %% close loops
 end % end pp loop

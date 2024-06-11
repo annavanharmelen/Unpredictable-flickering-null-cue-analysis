@@ -7,7 +7,7 @@ clear; clc; close all;
 for pp      = [2];
 
 %% Set trig labels and epoch timings
-values2use  = [21:29,210:272]; % capture-cue onset
+values2use  = [31:39,310:372]; % capture-cue onset
 prestim     = -0.75; % these timings ensure that all trials fit within this frame
 poststim    = 1.5; % until 1.5 s after
 
@@ -81,7 +81,7 @@ cfg.channel = {'eyeX','eyeY','eyePupil'};
 eyedata = ft_selectdata(cfg, eyedata);
 
 %% save data as function of pp name and eyedata session
-save([param.path, '\epoched_data\eyedata_vidi4','_'  param.subjName], 'eyedata');
+save([param.path, '\epoched_data\eyedata_vidi4_probe','_'  param.subjName], 'eyedata');
 
 %% test plot
 figure; 
