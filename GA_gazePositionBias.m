@@ -10,8 +10,8 @@ pp2do = [1, 3:25, 27];
 nsmooth         = 200;
 baselineCorrect = 1;
 removeTrials    = 0; % remove trials with more than XX pixel deviation from baseline
-plotSinglePps   = 1;
-plotGAs         = 1;
+plotSinglePps   = 0;
+plotGAs         = 0;
 xlimtoplot      = [-100 1500];
 
 %% set visual parameters
